@@ -8,319 +8,74 @@
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --bg: #08090c;
-    --surface: #0f1117;
-    --border: rgba(255,255,255,0.08);
-    --border-hover: rgba(255,255,255,0.18);
-    --text: #e8e4d9;
-    --muted: #7a7870;
-    --accent: #c8bfa8;
-    --gold: #d4a843;
-    --gold-dim: rgba(212,168,67,0.12);
-    --serif: 'EB Garamond', Georgia, serif;
-    --mono: 'DM Mono', 'Courier New', monospace;
+    --bg: #08090c; --surface: #0f1117; --card: #13161e; --card-hover: #171b26;
+    --border: rgba(255,255,255,0.07); --border-hover: rgba(255,255,255,0.16);
+    --text: #e8e4d9; --text-body: #c4bfb4; --muted: #7a7870; --accent: #c8bfa8;
+    --gold: #d4a843; --gold-dim: rgba(212,168,67,0.10); --gold-border: rgba(212,168,67,0.22);
+    --teal: #4db8a8; --teal-dim: rgba(77,184,168,0.09);
+    --serif: 'EB Garamond', Georgia, serif; --mono: 'DM Mono', 'Courier New', monospace; --r: 10px;
   }
-
   html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--serif);
-    font-size: 18px;
-    line-height: 1.7;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  /* Star canvas */
-  #stars {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-  }
-
-  /* Layout */
-  .wrap {
-    position: relative;
-    z-index: 1;
-    max-width: 860px;
-    margin: 0 auto;
-    padding: 0 2rem;
-  }
-
-  /* Header */
-  header {
-    padding: 7rem 0 5rem;
-    border-bottom: 0.5px solid var(--border);
-  }
-
-  .eyebrow {
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 300;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-  .eyebrow::before {
-    content: '';
-    display: inline-block;
-    width: 32px;
-    height: 0.5px;
-    background: var(--gold);
-  }
-
-  h1 {
-    font-family: var(--serif);
-    font-size: clamp(3rem, 8vw, 5.5rem);
-    font-weight: 400;
-    line-height: 1.05;
-    letter-spacing: -0.01em;
-    margin-bottom: 1.5rem;
-    color: var(--text);
-  }
-
-  h1 em {
-    font-style: italic;
-    color: var(--accent);
-  }
-
-  .tagline {
-    font-family: var(--mono);
-    font-size: 13px;
-    font-weight: 300;
-    color: var(--muted);
-    letter-spacing: 0.04em;
-    max-width: 480px;
-    line-height: 1.8;
-  }
-
-  .header-links {
-    margin-top: 2.5rem;
-    display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-  }
-
-  .header-links a {
-    font-family: var(--mono);
-    font-size: 12px;
-    font-weight: 300;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    text-decoration: none;
-    border-bottom: 0.5px solid var(--border);
-    padding-bottom: 2px;
-    transition: color 0.2s, border-color 0.2s;
-  }
-
-  .header-links a:hover {
-    color: var(--gold);
-    border-color: var(--gold);
-  }
-
-  /* Projects section */
-  .section-label {
-    font-family: var(--mono);
-    font-size: 10px;
-    font-weight: 300;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--muted);
-    padding: 3.5rem 0 2.5rem;
-  }
-
-  /* Project cards */
-  .projects {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .project {
-    border-top: 0.5px solid var(--border);
-    padding: 2.5rem 0;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    transition: background 0.2s;
-    position: relative;
-  }
-  .project:last-child { border-bottom: 0.5px solid var(--border); }
-
-  .project-header {
-    display: flex;
-    align-items: baseline;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-
-  .project-num {
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 300;
-    color: var(--muted);
-    min-width: 2ch;
-  }
-
-  .project-title {
-    font-family: var(--serif);
-    font-size: 1.55rem;
-    font-weight: 500;
-    letter-spacing: -0.01em;
-    color: var(--text);
-    flex: 1;
-  }
-
-  .badge {
-    font-family: var(--mono);
-    font-size: 10px;
-    font-weight: 300;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--gold);
-    background: var(--gold-dim);
-    border: 0.5px solid rgba(212,168,67,0.25);
-    padding: 3px 8px;
-    border-radius: 2px;
-  }
-
-  .project-desc {
-    font-family: var(--serif);
-    font-size: 1rem;
-    color: #a8a49b;
-    line-height: 1.75;
-    padding-left: 0;
-    max-width: 680px;
-  }
-
-  .tags {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    margin-top: 0.25rem;
-  }
-
-  .tag {
-    font-family: var(--mono);
-    font-size: 10px;
-    font-weight: 300;
-    letter-spacing: 0.08em;
-    color: var(--muted);
-    border: 0.5px solid var(--border);
-    padding: 2px 8px;
-    border-radius: 2px;
-  }
-
-  .project-links {
-    display: flex;
-    gap: 1.25rem;
-    margin-top: 0.5rem;
-    align-items: center;
-  }
-
-  .project-links a {
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 300;
-    letter-spacing: 0.08em;
-    color: var(--muted);
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    transition: color 0.2s;
-  }
-
-  .project-links a:hover { color: var(--text); }
-
-  .project-links a.demo {
-    color: var(--gold);
-    border: 0.5px solid rgba(212,168,67,0.3);
-    padding: 4px 12px;
-    border-radius: 2px;
-    transition: background 0.2s, color 0.2s;
-  }
-  .project-links a.demo:hover {
-    background: var(--gold-dim);
-    color: var(--gold);
-  }
-
-  .arrow { font-style: normal; }
-
-  /* Stars stat */
-  .stars-count {
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 300;
-    color: var(--muted);
-    margin-left: auto;
-  }
-
-  /* Footer */
-  footer {
-    padding: 4rem 0 5rem;
-    border-top: 0.5px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-
-  .footer-name {
-    font-family: var(--serif);
-    font-size: 1rem;
-    font-style: italic;
-    color: var(--muted);
-  }
-
-  .footer-links {
-    display: flex;
-    gap: 1.5rem;
-  }
-
-  .footer-links a {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
+  body { background: var(--bg); color: var(--text); font-family: var(--serif); font-size: 19px; line-height: 1.72; min-height: 100vh; overflow-x: hidden; }
+  #stars { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+  .wrap { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+  header { padding: 7rem 0 5rem; border-bottom: 0.5px solid var(--border); }
+  .eyebrow { font-family: var(--mono); font-size: 11px; font-weight: 300; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem; }
+  .eyebrow::before { content: ''; display: inline-block; width: 32px; height: 0.5px; background: var(--gold); }
+  h1 { font-family: var(--serif); font-size: clamp(3rem, 8vw, 5.5rem); font-weight: 400; line-height: 1.05; letter-spacing: -0.01em; margin-bottom: 1.5rem; color: var(--text); }
+  h1 em { font-style: italic; color: var(--accent); }
+  .tagline { font-family: var(--mono); font-size: 13px; font-weight: 300; color: var(--muted); letter-spacing: 0.04em; max-width: 500px; line-height: 1.85; }
+  .header-links { margin-top: 2.5rem; display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .header-links a { font-family: var(--mono); font-size: 12px; font-weight: 300; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; border-bottom: 0.5px solid var(--border); padding-bottom: 2px; transition: color 0.2s, border-color 0.2s; }
+  .header-links a:hover { color: var(--gold); border-color: var(--gold); }
+  .section-label { font-family: var(--mono); font-size: 10px; font-weight: 300; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); padding: 3.5rem 0 2rem; display: flex; align-items: center; gap: 1rem; }
+  .section-label::after { content: ''; flex: 1; height: 0.5px; background: var(--border); }
+  .projects { display: flex; flex-direction: column; gap: 1.1rem; padding-bottom: 4rem; }
+  .project { background: var(--card); border: 0.5px solid var(--border); border-radius: var(--r); padding: 2rem 2.2rem 1.8rem; transition: background 0.22s, border-color 0.22s, transform 0.2s; position: relative; overflow: hidden; }
+  .project::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--border); border-radius: var(--r) 0 0 var(--r); }
+  .project:hover { background: var(--card-hover); border-color: var(--border-hover); transform: translateY(-1px); }
+  .project.pub::before { background: var(--gold); }
+  .project.live::before { background: var(--teal); }
+  .proj-top { display: flex; align-items: flex-start; gap: 0.9rem; margin-bottom: 1rem; flex-wrap: wrap; }
+  .proj-num { font-family: var(--mono); font-size: 11px; font-weight: 300; color: var(--muted); padding-top: 6px; min-width: 2ch; flex-shrink: 0; }
+  .proj-titles { flex: 1; min-width: 0; }
+  .proj-title { font-family: var(--serif); font-size: 1.45rem; font-weight: 500; letter-spacing: -0.01em; color: var(--text); line-height: 1.25; margin-bottom: 0.2rem; }
+  .proj-venue { font-family: var(--mono); font-size: 11px; font-weight: 300; color: var(--muted); letter-spacing: 0.05em; }
+  .badge { font-family: var(--mono); font-size: 10px; font-weight: 300; letter-spacing: 0.1em; text-transform: uppercase; flex-shrink: 0; padding: 3px 9px; border-radius: 3px; margin-top: 4px; }
+  .badge-gold { color: var(--gold); background: var(--gold-dim); border: 0.5px solid var(--gold-border); }
+  .badge-teal { color: var(--teal); background: var(--teal-dim); border: 0.5px solid rgba(77,184,168,0.25); }
+  .proj-desc { font-family: var(--serif); font-size: 1.05rem; color: var(--text-body); line-height: 1.82; margin-bottom: 1.1rem; max-width: 72ch; }
+  .tags { display: flex; gap: 0.45rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
+  .tag { font-family: var(--mono); font-size: 10px; font-weight: 300; letter-spacing: 0.08em; color: var(--muted); border: 0.5px solid var(--border); padding: 2px 8px; border-radius: 3px; }
+  .proj-links { display: flex; gap: 1.2rem; align-items: center; border-top: 0.5px solid var(--border); padding-top: 1rem; flex-wrap: wrap; }
+  .proj-links a { font-family: var(--mono); font-size: 11px; font-weight: 300; letter-spacing: 0.08em; color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 5px; transition: color 0.2s; }
+  .proj-links a:hover { color: var(--text); }
+  .proj-links a.cta { color: var(--gold); border: 0.5px solid var(--gold-border); background: var(--gold-dim); padding: 4px 13px; border-radius: 3px; transition: background 0.2s; }
+  .proj-links a.cta:hover { background: rgba(212,168,67,0.18); color: var(--gold); }
+  .proj-links a.cta-teal { color: var(--teal); border: 0.5px solid rgba(77,184,168,0.3); background: var(--teal-dim); padding: 4px 13px; border-radius: 3px; transition: background 0.2s; }
+  .proj-links a.cta-teal:hover { background: rgba(77,184,168,0.16); color: var(--teal); }
+  .stars-count { font-family: var(--mono); font-size: 11px; font-weight: 300; color: var(--muted); margin-left: auto; }
+  footer { padding: 3rem 0 5rem; border-top: 0.5px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+  .footer-name { font-family: var(--serif); font-size: 1rem; font-style: italic; color: var(--muted); }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
   .footer-links a:hover { color: var(--text); }
-
   @media (max-width: 600px) {
-    h1 { font-size: 2.8rem; }
-    .project-title { font-size: 1.25rem; }
-    .wrap { padding: 0 1.25rem; }
-    header { padding: 4rem 0 3rem; }
+    h1 { font-size: 2.8rem; } .proj-title { font-size: 1.2rem; }
+    .wrap { padding: 0 1.25rem; } header { padding: 4rem 0 3rem; }
+    .project { padding: 1.4rem 1.4rem 1.3rem; }
   }
 </style>
 </head>
 <body>
-
 <canvas id="stars"></canvas>
-
 <div class="wrap">
 
   <header>
     <div class="eyebrow">Andrea Riba</div>
     <h1>Science,<br><em>computation</em>,<br>curiosity.</h1>
-    <p class="tagline">
-      Physicist turned data scientist. Building tools at the intersection
-      of machine learning, open data, and scientific discovery.
-    </p>
+    <p class="tagline">Physicist turned data scientist. Building tools at the intersection of machine learning, open data, and scientific discovery.</p>
     <nav class="header-links">
       <a href="https://github.com/andreariba" target="_blank">GitHub →</a>
       <a href="mailto:arriba87@gmail.com">arriba87@gmail.com →</a>
@@ -328,132 +83,122 @@
   </header>
 
   <div class="section-label">Selected projects</div>
-
   <div class="projects">
 
-    <!-- DeepCycle -->
-    <article class="project">
-      <div class="project-header">
-        <span class="project-num">01</span>
-        <h2 class="project-title">DeepCycle</h2>
-        <span class="badge">Nature Communications</span>
+    <!-- 01 DeepCycle -->
+    <article class="project pub">
+      <div class="proj-top">
+        <span class="proj-num">01</span>
+        <div class="proj-titles">
+          <h2 class="proj-title">DeepCycle</h2>
+          <p class="proj-venue">Nature Communications · 2022</p>
+        </div>
+        <span class="badge badge-gold">Published</span>
       </div>
-      <p class="project-desc">
-        Cell cycle inference in single-cell RNA-seq using RNA velocity and a circular
-        autoencoder. Assigns a continuous transcriptional phase angle to each cell,
-        revealing hidden oscillatory structure without external perturbations.
-        Published in <em>Nature Communications</em> (2022).
-      </p>
+      <p class="proj-desc">Cell cycle inference in single-cell RNA-seq using RNA velocity and a circular autoencoder. Assigns a continuous transcriptional phase angle to each cell, revealing hidden oscillatory structure in transcriptional dynamics without external perturbations or cell sorting.</p>
       <div class="tags">
-        <span class="tag">Python</span>
-        <span class="tag">TensorFlow</span>
-        <span class="tag">scRNA-seq</span>
-        <span class="tag">RNA velocity</span>
-        <span class="tag">bioinformatics</span>
+        <span class="tag">Python</span><span class="tag">TensorFlow</span><span class="tag">scRNA-seq</span><span class="tag">RNA velocity</span><span class="tag">bioinformatics</span>
       </div>
-      <div class="project-links">
-        <a href="https://github.com/andreariba/DeepCycle" target="_blank">
-          <span>GitHub</span>
-        </a>
-        <a href="https://www.nature.com/articles/s41467-022-30545-8" target="_blank">
-          <span>Paper</span>
-        </a>
+      <div class="proj-links">
+        <a href="https://github.com/andreariba/DeepCycle" target="_blank">GitHub</a>
+        <a href="https://www.nature.com/articles/s41467-022-30545-8" target="_blank" class="cta">Paper ↗</a>
         <span class="stars-count">★ 50</span>
       </div>
     </article>
 
-    <!-- games-ai -->
-    <article class="project">
-      <div class="project-header">
-        <span class="project-num">02</span>
-        <h2 class="project-title">Games & AI</h2>
-        <span class="badge">Live demo</span>
+    <!-- 02 codon_TASEP -->
+    <article class="project pub">
+      <div class="proj-top">
+        <span class="proj-num">02</span>
+        <div class="proj-titles">
+          <h2 class="proj-title">Codon TASEP</h2>
+          <p class="proj-venue">PNAS · 2019</p>
+        </div>
+        <span class="badge badge-gold">Published</span>
       </div>
-      <p class="project-desc">
-        A collection of AI algorithms for classic games — minimax with alpha-beta
-        pruning, Monte Carlo Tree Search, and AlphaZero-style policy networks.
-        Play against the AI directly in the browser for Tic-Tac-Toe, Connect Four,
-        and Tetris.
-      </p>
+      <p class="proj-desc">Simulation of ribosome dynamics along mRNA transcripts using an inhomogeneous Totally Asymmetric Simple Exclusion Process (TASEP) with codon-specific elongation rates. Combined with ribosome footprinting data from yeast, the model revealed that amino acid composition is as important a determinant of translation elongation speed as codon–tRNA adaptation — challenging a long-standing assumption in molecular biology.</p>
       <div class="tags">
-        <span class="tag">Python</span>
-        <span class="tag">JavaScript</span>
-        <span class="tag">AlphaZero</span>
-        <span class="tag">MCTS</span>
-        <span class="tag">Deep Q-learning</span>
+        <span class="tag">C++</span><span class="tag">TASEP</span><span class="tag">ribosome profiling</span><span class="tag">translation</span><span class="tag">yeast</span><span class="tag">biophysics</span>
       </div>
-      <div class="project-links">
+      <div class="proj-links">
+        <a href="https://github.com/andreariba/codon_TASEP" target="_blank">GitHub</a>
+        <a href="https://www.pnas.org/doi/abs/10.1073/pnas.1817299116" target="_blank" class="cta">Paper ↗</a>
+      </div>
+    </article>
+
+    <!-- 03 Games & AI -->
+    <article class="project live">
+      <div class="proj-top">
+        <span class="proj-num">03</span>
+        <div class="proj-titles">
+          <h2 class="proj-title">Games &amp; AI</h2>
+          <p class="proj-venue">Interactive demo</p>
+        </div>
+        <span class="badge badge-teal">Live demo</span>
+      </div>
+      <p class="proj-desc">A collection of AI algorithms for classic games — minimax with alpha-beta pruning, Monte Carlo Tree Search, and AlphaZero-style policy networks. Play against the AI directly in the browser for Tic-Tac-Toe, Connect Four, and Tetris.</p>
+      <div class="tags">
+        <span class="tag">Python</span><span class="tag">JavaScript</span><span class="tag">AlphaZero</span><span class="tag">MCTS</span><span class="tag">Deep Q-learning</span>
+      </div>
+      <div class="proj-links">
         <a href="https://github.com/andreariba/games-ai" target="_blank">GitHub</a>
-        <a class="demo" href="https://andreariba.github.io/games-ai" target="_blank">Play ↗</a>
+        <a class="cta-teal" href="https://andreariba.github.io/games-ai" target="_blank">Play ↗</a>
       </div>
     </article>
 
-    <!-- space3D -->
-    <article class="project">
-      <div class="project-header">
-        <span class="project-num">03</span>
-        <h2 class="project-title">Space 3D</h2>
-        <span class="badge">Live demo</span>
+    <!-- 04 Space 3D -->
+    <article class="project live">
+      <div class="proj-top">
+        <span class="proj-num">04</span>
+        <div class="proj-titles">
+          <h2 class="proj-title">Space 3D</h2>
+          <p class="proj-venue">Interactive demo</p>
+        </div>
+        <span class="badge badge-teal">Live demo</span>
       </div>
-      <p class="project-desc">
-        Interactive 3D visualisation of the night sky using real HYG star catalogue
-        data and physically accurate spectral colours (Harre &amp; Heller, 2021).
-        Navigate a rendition of the observable universe in your browser with Three.js.
-      </p>
+      <p class="proj-desc">Interactive 3D visualisation of the night sky using real HYG star catalogue data and physically accurate spectral colours (Harre &amp; Heller, 2021). Navigate a rendition of the observable universe in your browser with Three.js.</p>
       <div class="tags">
-        <span class="tag">JavaScript</span>
-        <span class="tag">Three.js</span>
-        <span class="tag">WebGL</span>
-        <span class="tag">astronomy</span>
-        <span class="tag">data viz</span>
+        <span class="tag">JavaScript</span><span class="tag">Three.js</span><span class="tag">WebGL</span><span class="tag">astronomy</span><span class="tag">data viz</span>
       </div>
-      <div class="project-links">
+      <div class="proj-links">
         <a href="https://github.com/andreariba/space3D" target="_blank">GitHub</a>
-        <a class="demo" href="https://andreariba.github.io/space3D/" target="_blank">Explore ↗</a>
+        <a class="cta-teal" href="https://andreariba.github.io/space3D/" target="_blank">Explore ↗</a>
       </div>
     </article>
 
-    <!-- moonbirths -->
+    <!-- 05 MoonBirths -->
     <article class="project">
-      <div class="project-header">
-        <span class="project-num">04</span>
-        <h2 class="project-title">MoonBirths</h2>
+      <div class="proj-top">
+        <span class="proj-num">05</span>
+        <div class="proj-titles">
+          <h2 class="proj-title">MoonBirths</h2>
+          <p class="proj-venue">Open data analysis · 2026</p>
+        </div>
       </div>
-      <p class="project-desc">
-        Do births cluster around phases of the Moon? This project extracts every
-        human birth date recorded in Wikidata, maps each one to its position in
-        the lunar cycle, and applies FFT analysis to look for periodic signal in
-        a dataset of millions of people.
-      </p>
+      <p class="proj-desc">Do births cluster around phases of the Moon? This project extracts every human birth date recorded in Wikidata — over 2.9 million day-precision records spanning two centuries — maps each one to its position in the lunar cycle using astronomical ephemerides, and applies FFT analysis to search for any periodic signal. The result is a clean null finding: moon phase is not a measurable predictor of birth timing.</p>
       <div class="tags">
-        <span class="tag">Python</span>
-        <span class="tag">Polars</span>
-        <span class="tag">Wikidata</span>
-        <span class="tag">statistics</span>
-        <span class="tag">astronomy</span>
+        <span class="tag">Python</span><span class="tag">Polars</span><span class="tag">Wikidata</span><span class="tag">pyephem</span><span class="tag">statistics</span><span class="tag">astronomy</span>
       </div>
-      <div class="project-links">
+      <div class="proj-links">
         <a href="https://github.com/andreariba/moonbirths" target="_blank">GitHub</a>
-       <a class="demo" href="https://andreariba.github.io/moonbirths" target="_blank">Results ↗</a>
+        <a class="cta" href="https://andreariba.github.io/moonbirths" target="_blank">Results ↗</a>
       </div>
     </article>
 
-    <!-- Portfolio_app -->
+    <!-- 06 Portfolio App -->
     <article class="project">
-      <div class="project-header">
-        <span class="project-num">05</span>
-        <h2 class="project-title">Portfolio App</h2>
+      <div class="proj-top">
+        <span class="proj-num">06</span>
+        <div class="proj-titles">
+          <h2 class="proj-title">Portfolio App</h2>
+          <p class="proj-venue">Web application</p>
+        </div>
       </div>
-      <p class="project-desc">
-        A web application for presenting and exploring personal projects —
-        the foundation from which this very portfolio grew.
-      </p>
-      <div class="tags">
-        <span class="tag">web app</span>
-      </div>
-      <div class="project-links">
+      <p class="proj-desc">A web application for presenting and exploring personal projects — the foundation from which this very portfolio grew.</p>
+      <div class="tags"><span class="tag">web app</span></div>
+      <div class="proj-links">
         <a href="https://github.com/andreariba/Portfolio_app" target="_blank">GitHub</a>
-       <a class="demo" href="https://medium.com/@arriba87/portfolio-visualization-and-forecasting-with-dash-in-python-f6c002bdae39" target="_blank">Read ↗</a>
+        <a href="https://medium.com/@arriba87/portfolio-visualization-and-forecasting-with-dash-in-python-f6c002bdae39" target="_blank">Article ↗</a>
       </div>
     </article>
 
@@ -466,7 +211,6 @@
       <a href="mailto:arriba87@gmail.com">Email</a>
     </nav>
   </footer>
-
 </div>
 
 <script>
@@ -474,46 +218,27 @@
   const canvas = document.getElementById('stars');
   const ctx = canvas.getContext('2d');
   let W, H, stars = [];
-
-  function resize() {
-    W = canvas.width = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-  }
-
+  function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
   function mkStars(n) {
     stars = [];
     for (let i = 0; i < n; i++) {
       const r = Math.random();
-      stars.push({
-        x: Math.random() * W,
-        y: Math.random() * H,
-        r: r < 0.7 ? 0.4 : r < 0.9 ? 0.7 : 1.1,
-        a: Math.random(),
-        da: (Math.random() - 0.5) * 0.004,
-        base: 0.1 + Math.random() * 0.5
-      });
+      stars.push({ x: Math.random()*W, y: Math.random()*H, r: r<0.7?0.4:r<0.9?0.7:1.1, a: Math.random(), da: (Math.random()-0.5)*0.004, base: 0.1+Math.random()*0.5 });
     }
   }
-
   function draw() {
-    ctx.clearRect(0, 0, W, H);
+    ctx.clearRect(0,0,W,H);
     for (const s of stars) {
       s.a += s.da;
-      if (s.a > s.base + 0.4 || s.a < s.base - 0.1) s.da *= -1;
-      ctx.beginPath();
-      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(220,215,200,${Math.max(0, s.a)})`;
-      ctx.fill();
+      if (s.a > s.base+0.4 || s.a < s.base-0.1) s.da *= -1;
+      ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle = `rgba(220,215,200,${Math.max(0,s.a)})`; ctx.fill();
     }
     requestAnimationFrame(draw);
   }
-
-  resize();
-  mkStars(280);
-  draw();
+  resize(); mkStars(280); draw();
   window.addEventListener('resize', () => { resize(); mkStars(280); });
 })();
 </script>
-
 </body>
 </html>
