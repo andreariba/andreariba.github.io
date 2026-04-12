@@ -9,28 +9,75 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --bg: #08090c; --surface: #0f1117; --card: #13161e; --card-hover: #171b26;
+    --bg: #08090c; --card: #13161e; --card-hover: #171b26;
     --border: rgba(255,255,255,0.07); --border-hover: rgba(255,255,255,0.16);
-    --text: #e8e4d9; --text-body: #c4bfb4; --muted: #7a7870; --accent: #c8bfa8;
+    --text: #e8e4d9; --text-body: #c4bfb4; --muted: #7a7870;
     --gold: #d4a843; --gold-dim: rgba(212,168,67,0.10); --gold-border: rgba(212,168,67,0.22);
     --teal: #4db8a8; --teal-dim: rgba(77,184,168,0.09);
-    --serif: 'EB Garamond', Georgia, serif; --mono: 'DM Mono', 'Courier New', monospace; --r: 10px;
+    --serif: 'EB Garamond', Georgia, serif;
+    --mono: 'DM Mono', 'Courier New', monospace;
+    --r: 10px;
   }
   html { scroll-behavior: smooth; }
   body { background: var(--bg); color: var(--text); font-family: var(--serif); font-size: 19px; line-height: 1.72; min-height: 100vh; overflow-x: hidden; }
   #stars { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
   .wrap { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+
+  /* Header */
   header { padding: 7rem 0 5rem; border-bottom: 0.5px solid var(--border); }
   .eyebrow { font-family: var(--mono); font-size: 11px; font-weight: 300; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem; }
   .eyebrow::before { content: ''; display: inline-block; width: 32px; height: 0.5px; background: var(--gold); }
-  h1 { font-family: var(--serif); font-size: clamp(3rem, 8vw, 5.5rem); font-weight: 400; line-height: 1.05; letter-spacing: -0.01em; margin-bottom: 1.5rem; color: var(--text); }
-  h1 em { font-style: italic; color: var(--accent); }
+  h1 { font-family: var(--serif); font-size: clamp(3rem, 8vw, 5.5rem); font-weight: 400; line-height: 1.05; letter-spacing: -0.01em; margin-bottom: 1.5rem; }
+  h1 em { font-style: italic; color: #c8bfa8; }
   .tagline { font-family: var(--mono); font-size: 13px; font-weight: 300; color: var(--muted); letter-spacing: 0.04em; max-width: 500px; line-height: 1.85; }
   .header-links { margin-top: 2.5rem; display: flex; gap: 1.5rem; flex-wrap: wrap; }
   .header-links a { font-family: var(--mono); font-size: 12px; font-weight: 300; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; border-bottom: 0.5px solid var(--border); padding-bottom: 2px; transition: color 0.2s, border-color 0.2s; }
   .header-links a:hover { color: var(--gold); border-color: var(--gold); }
+
+  /* Section label */
   .section-label { font-family: var(--mono); font-size: 10px; font-weight: 300; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); padding: 3.5rem 0 2rem; display: flex; align-items: center; gap: 1rem; }
   .section-label::after { content: ''; flex: 1; height: 0.5px; background: var(--border); }
+
+  /* ── BIO SECTION ── */
+  .bio-intro { font-family: var(--serif); font-size: 1.12rem; color: var(--text-body); line-height: 1.85; max-width: 74ch; margin-bottom: 2rem; }
+  .bio-intro strong { color: var(--text); font-weight: 500; }
+
+  /* Stats row */
+  .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.9rem; margin-bottom: 2rem; }
+  .stat-card { background: var(--card); border: 0.5px solid var(--border); border-radius: var(--r); padding: 1.2rem 1.4rem; }
+  .stat-n { font-family: var(--serif); font-size: 2.2rem; font-weight: 400; line-height: 1; color: var(--gold); margin-bottom: 0.3rem; }
+  .stat-label { font-family: var(--mono); font-size: 10px; font-weight: 300; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+
+  /* Timeline */
+  .timeline { display: flex; flex-direction: column; gap: 0; margin-bottom: 2rem; }
+  .tl-item { display: grid; grid-template-columns: 110px 1fr; gap: 0 1.4rem; padding: 1.3rem 0; border-top: 0.5px solid var(--border); position: relative; }
+  .tl-item:last-child { border-bottom: 0.5px solid var(--border); }
+  .tl-date { font-family: var(--mono); font-size: 11px; font-weight: 300; color: var(--muted); letter-spacing: 0.04em; padding-top: 3px; line-height: 1.6; }
+  .tl-body {}
+  .tl-role { font-family: var(--serif); font-size: 1.1rem; font-weight: 500; color: var(--text); margin-bottom: 0.15rem; line-height: 1.3; }
+  .tl-org { font-family: var(--mono); font-size: 11px; font-weight: 300; color: var(--muted); margin-bottom: 0.45rem; letter-spacing: 0.04em; }
+  .tl-desc { font-family: var(--serif); font-size: 0.97rem; color: var(--text-body); line-height: 1.75; }
+  .tl-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.55rem; }
+  .tl-tag { font-family: var(--mono); font-size: 10px; font-weight: 300; letter-spacing: 0.07em; color: var(--muted); border: 0.5px solid var(--border); padding: 2px 7px; border-radius: 3px; }
+
+  /* Publications */
+  .pub-list { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 0.5rem; }
+  .pub-card { background: var(--card); border: 0.5px solid var(--border); border-radius: var(--r); padding: 1.1rem 1.3rem; display: grid; grid-template-columns: 1fr auto; gap: 0.5rem 1rem; align-items: start; transition: border-color 0.2s; }
+  .pub-card:hover { border-color: var(--border-hover); }
+  .pub-title { font-family: var(--serif); font-size: 1rem; font-weight: 500; color: var(--text); line-height: 1.45; margin-bottom: 0.25rem; }
+  .pub-meta { font-family: var(--mono); font-size: 10px; font-weight: 300; color: var(--muted); letter-spacing: 0.05em; line-height: 1.6; }
+  .pub-badge { font-family: var(--mono); font-size: 10px; font-weight: 300; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); background: var(--gold-dim); border: 0.5px solid var(--gold-border); padding: 3px 9px; border-radius: 3px; white-space: nowrap; align-self: start; }
+  .pub-link { font-family: var(--mono); font-size: 10px; font-weight: 300; color: var(--muted); text-decoration: none; letter-spacing: 0.06em; transition: color 0.2s; display: inline-block; margin-top: 0.3rem; }
+  .pub-link:hover { color: var(--teal); }
+
+  /* Skills grid */
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.8rem; margin-bottom: 0.5rem; }
+  .skill-group { background: var(--card); border: 0.5px solid var(--border); border-radius: var(--r); padding: 1rem 1.2rem; }
+  .skill-group-title { font-family: var(--mono); font-size: 10px; font-weight: 300; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.6rem; }
+  .skill-items { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+  .skill-item { font-family: var(--mono); font-size: 10px; font-weight: 300; letter-spacing: 0.06em; color: var(--text-body); border: 0.5px solid var(--border); padding: 2px 7px; border-radius: 3px; }
+
+  /* Projects */
   .projects { display: flex; flex-direction: column; gap: 1.1rem; padding-bottom: 4rem; }
   .project { background: var(--card); border: 0.5px solid var(--border); border-radius: var(--r); padding: 2rem 2.2rem 1.8rem; transition: background 0.22s, border-color 0.22s, transform 0.2s; position: relative; overflow: hidden; }
   .project::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--border); border-radius: var(--r) 0 0 var(--r); }
@@ -49,22 +96,31 @@
   .tags { display: flex; gap: 0.45rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
   .tag { font-family: var(--mono); font-size: 10px; font-weight: 300; letter-spacing: 0.08em; color: var(--muted); border: 0.5px solid var(--border); padding: 2px 8px; border-radius: 3px; }
   .proj-links { display: flex; gap: 1.2rem; align-items: center; border-top: 0.5px solid var(--border); padding-top: 1rem; flex-wrap: wrap; }
-  .proj-links a { font-family: var(--mono); font-size: 11px; font-weight: 300; letter-spacing: 0.08em; color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 5px; transition: color 0.2s; }
+  .proj-links a { font-family: var(--mono); font-size: 11px; font-weight: 300; letter-spacing: 0.08em; color: var(--muted); text-decoration: none; transition: color 0.2s; }
   .proj-links a:hover { color: var(--text); }
   .proj-links a.cta { color: var(--gold); border: 0.5px solid var(--gold-border); background: var(--gold-dim); padding: 4px 13px; border-radius: 3px; transition: background 0.2s; }
   .proj-links a.cta:hover { background: rgba(212,168,67,0.18); color: var(--gold); }
   .proj-links a.cta-teal { color: var(--teal); border: 0.5px solid rgba(77,184,168,0.3); background: var(--teal-dim); padding: 4px 13px; border-radius: 3px; transition: background 0.2s; }
-  .proj-links a.cta-teal:hover { background: rgba(77,184,168,0.16); color: var(--teal); }
+  .proj-links a.cta-teal:hover { background: rgba(77,184,168,0.16); }
   .stars-count { font-family: var(--mono); font-size: 11px; font-weight: 300; color: var(--muted); margin-left: auto; }
+
+  /* Footer */
   footer { padding: 3rem 0 5rem; border-top: 0.5px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
   .footer-name { font-family: var(--serif); font-size: 1rem; font-style: italic; color: var(--muted); }
   .footer-links { display: flex; gap: 1.5rem; }
   .footer-links a { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
   .footer-links a:hover { color: var(--text); }
-  @media (max-width: 600px) {
-    h1 { font-size: 2.8rem; } .proj-title { font-size: 1.2rem; }
-    .wrap { padding: 0 1.25rem; } header { padding: 4rem 0 3rem; }
+
+  @media (max-width: 640px) {
+    h1 { font-size: 2.8rem; }
+    .wrap { padding: 0 1.25rem; }
+    header { padding: 4rem 0 3rem; }
+    .stats { grid-template-columns: 1fr 1fr; }
+    .tl-item { grid-template-columns: 1fr; gap: 0.2rem; }
+    .tl-date { font-size: 10px; }
     .project { padding: 1.4rem 1.4rem 1.3rem; }
+    .proj-title { font-size: 1.2rem; }
+    .pub-card { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -72,145 +128,310 @@
 <canvas id="stars"></canvas>
 <div class="wrap">
 
+  <!-- ── HEADER ── -->
   <header>
     <div class="eyebrow">Andrea Riba</div>
     <h1>Science,<br><em>computation</em>,<br>curiosity.</h1>
     <p class="tagline">Physicist turned data scientist. Building tools at the intersection of machine learning, open data, and scientific discovery.</p>
     <nav class="header-links">
+      <a href="#bio">About →</a>
+      <a href="#projects">Projects →</a>
       <a href="https://github.com/andreariba" target="_blank">GitHub →</a>
-      <a href="mailto:arriba87@gmail.com">arriba87@gmail.com →</a>
+      <a href="mailto:arriba87@gmail.com">Email →</a>
     </nav>
   </header>
 
-  <div class="section-label">Selected projects</div>
-  <div class="projects">
+  <!-- ── BIO ── -->
+  <section id="bio">
+    <div class="section-label">About</div>
 
-    <!-- 01 DeepCycle -->
-    <article class="project pub">
-      <div class="proj-top">
-        <span class="proj-num">01</span>
-        <div class="proj-titles">
-          <h2 class="proj-title">DeepCycle</h2>
-          <p class="proj-venue">Nature Communications · 2022</p>
-        </div>
-        <span class="badge badge-gold">Published</span>
-      </div>
-      <p class="proj-desc">Cell cycle inference in single-cell RNA-seq using RNA velocity and a circular autoencoder. Assigns a continuous transcriptional phase angle to each cell, revealing hidden oscillatory structure in transcriptional dynamics without external perturbations or cell sorting.</p>
-      <div class="tags">
-        <span class="tag">Python</span><span class="tag">TensorFlow</span><span class="tag">scRNA-seq</span><span class="tag">RNA velocity</span><span class="tag">bioinformatics</span>
-      </div>
-      <div class="proj-links">
-        <a href="https://github.com/andreariba/DeepCycle" target="_blank">GitHub</a>
-        <a href="https://www.nature.com/articles/s41467-022-30545-8" target="_blank" class="cta">Paper ↗</a>
-        <span class="stars-count">★ 50</span>
-      </div>
-    </article>
+    <p class="bio-intro">
+      I am a <strong>physicist</strong> passionate about building mathematical models to find patterns in data.
+      After a decade as a computational biologist — working on gene expression, translation dynamics,
+      and single-cell sequencing at leading European research institutes — I transitioned into industry,
+      applying the same rigour to credit risk modelling, cloud data engineering, and business process
+      optimisation. I am currently a <strong>Data Scientist at Leroy Merlin Italia</strong>, working on
+      supply chain, promotions, and logistics with Python, SQL, and Google Cloud Platform.
+      In my spare time I build open-source tools at the intersection of AI, data, and science.
+    </p>
 
-    <!-- 02 codon_TASEP -->
-    <article class="project pub">
-      <div class="proj-top">
-        <span class="proj-num">02</span>
-        <div class="proj-titles">
-          <h2 class="proj-title">Codon TASEP</h2>
-          <p class="proj-venue">PNAS · 2019</p>
-        </div>
-        <span class="badge badge-gold">Published</span>
+    <!-- Stats -->
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-n">1,020+</div>
+        <div class="stat-label">Google Scholar citations</div>
       </div>
-      <p class="proj-desc">Simulation of ribosome dynamics along mRNA transcripts using an inhomogeneous Totally Asymmetric Simple Exclusion Process (TASEP) with codon-specific elongation rates. Combined with ribosome footprinting data from yeast, the model revealed that amino acid composition is as important a determinant of translation elongation speed as codon–tRNA adaptation — challenging a long-standing assumption in molecular biology.</p>
-      <div class="tags">
-        <span class="tag">C++</span><span class="tag">TASEP</span><span class="tag">ribosome profiling</span><span class="tag">translation</span><span class="tag">yeast</span><span class="tag">biophysics</span>
+      <div class="stat-card">
+        <div class="stat-n">12</div>
+        <div class="stat-label">peer-reviewed publications</div>
       </div>
-      <div class="proj-links">
-        <a href="https://github.com/andreariba/codon_TASEP" target="_blank">GitHub</a>
-        <a href="https://www.pnas.org/doi/abs/10.1073/pnas.1817299116" target="_blank" class="cta">Paper ↗</a>
+      <div class="stat-card">
+        <div class="stat-n">10 yr</div>
+        <div class="stat-label">academic research career</div>
       </div>
-    </article>
+    </div>
 
-    <!-- 03 Games & AI -->
-    <article class="project live">
-      <div class="proj-top">
-        <span class="proj-num">03</span>
-        <div class="proj-titles">
-          <h2 class="proj-title">Games &amp; AI</h2>
-          <p class="proj-venue">Interactive demo</p>
-        </div>
-        <span class="badge badge-teal">Live demo</span>
-      </div>
-      <p class="proj-desc">A collection of AI algorithms for classic games — minimax with alpha-beta pruning, Monte Carlo Tree Search, and AlphaZero-style policy networks. Play against the AI directly in the browser for Tic-Tac-Toe, Connect Four, and Tetris.</p>
-      <div class="tags">
-        <span class="tag">Python</span><span class="tag">JavaScript</span><span class="tag">AlphaZero</span><span class="tag">MCTS</span><span class="tag">Deep Q-learning</span>
-      </div>
-      <div class="proj-links">
-        <a href="https://github.com/andreariba/games-ai" target="_blank">GitHub</a>
-        <a class="cta-teal" href="https://andreariba.github.io/games-ai" target="_blank">Play ↗</a>
-      </div>
-    </article>
+    <!-- Career timeline -->
+    <div class="section-label" style="padding-top:1rem;">Career</div>
+    <div class="timeline">
 
-    <!-- 04 Space 3D -->
-    <article class="project live">
-      <div class="proj-top">
-        <span class="proj-num">04</span>
-        <div class="proj-titles">
-          <h2 class="proj-title">Space 3D</h2>
-          <p class="proj-venue">Interactive demo</p>
-        </div>
-        <span class="badge badge-teal">Live demo</span>
-      </div>
-      <p class="proj-desc">Interactive 3D visualisation of the night sky using real HYG star catalogue data and physically accurate spectral colours (Harre &amp; Heller, 2021). Navigate a rendition of the observable universe in your browser with Three.js.</p>
-      <div class="tags">
-        <span class="tag">JavaScript</span><span class="tag">Three.js</span><span class="tag">WebGL</span><span class="tag">astronomy</span><span class="tag">data viz</span>
-      </div>
-      <div class="proj-links">
-        <a href="https://github.com/andreariba/space3D" target="_blank">GitHub</a>
-        <a class="cta-teal" href="https://andreariba.github.io/space3D/" target="_blank">Explore ↗</a>
-      </div>
-    </article>
-
-    <!-- 05 MoonBirths -->
-    <article class="project">
-      <div class="proj-top">
-        <span class="proj-num">05</span>
-        <div class="proj-titles">
-          <h2 class="proj-title">MoonBirths</h2>
-          <p class="proj-venue">Open data analysis · 2026</p>
+      <div class="tl-item">
+        <div class="tl-date">2024 — now</div>
+        <div class="tl-body">
+          <div class="tl-role">Data Scientist</div>
+          <div class="tl-org">Leroy Merlin Italia · Milan, Italy</div>
+          <div class="tl-desc">Analysis, modelling, and optimisation of business processes including supply chain overstocks, free delivery products, and promo code strategies.</div>
+          <div class="tl-tags"><span class="tl-tag">Python</span><span class="tl-tag">SQL</span><span class="tl-tag">GCP</span><span class="tl-tag">ZenML</span></div>
         </div>
       </div>
-      <p class="proj-desc">Do births cluster around phases of the Moon? This project extracts every human birth date recorded in Wikidata — over 2.9 million day-precision records spanning two centuries — maps each one to its position in the lunar cycle using astronomical ephemerides, and applies FFT analysis to search for any periodic signal. The result is a clean null finding: moon phase is not a measurable predictor of birth timing.</p>
-      <div class="tags">
-        <span class="tag">Python</span><span class="tag">Polars</span><span class="tag">Wikidata</span><span class="tag">pyephem</span><span class="tag">statistics</span><span class="tag">astronomy</span>
-      </div>
-      <div class="proj-links">
-        <a href="https://github.com/andreariba/moonbirths" target="_blank">GitHub</a>
-        <a class="cta" href="https://andreariba.github.io/moonbirths" target="_blank">Results ↗</a>
-      </div>
-    </article>
 
-    <!-- 06 Portfolio App -->
-    <article class="project">
-      <div class="proj-top">
-        <span class="proj-num">06</span>
-        <div class="proj-titles">
-          <h2 class="proj-title">Portfolio App</h2>
-          <p class="proj-venue">Web application</p>
+      <div class="tl-item">
+        <div class="tl-date">2022 — 2024</div>
+        <div class="tl-body">
+          <div class="tl-role">Senior Consultant</div>
+          <div class="tl-org">Capgemini Financial Services · Turin, Italy</div>
+          <div class="tl-desc">Implementation of structured finance models for the Credit Risk Office at Intesa Sanpaolo. Specialised in cloud-based data pipelines and event-driven architectures.</div>
+          <div class="tl-tags"><span class="tl-tag">Python</span><span class="tl-tag">GCP</span><span class="tl-tag">Apache Kafka</span><span class="tl-tag">Spark</span></div>
         </div>
       </div>
-      <p class="proj-desc">A web application for presenting and exploring personal projects — the foundation from which this very portfolio grew.</p>
-      <div class="tags"><span class="tag">web app</span></div>
-      <div class="proj-links">
-        <a href="https://github.com/andreariba/Portfolio_app" target="_blank">GitHub</a>
-        <a href="https://medium.com/@arriba87/portfolio-visualization-and-forecasting-with-dash-in-python-f6c002bdae39" target="_blank">Article ↗</a>
-      </div>
-    </article>
 
-  </div>
+      <div class="tl-item">
+        <div class="tl-date">2017 — 2022</div>
+        <div class="tl-body">
+          <div class="tl-role">Postdoctoral Researcher</div>
+          <div class="tl-org">IGBMC, University of Strasbourg · France &nbsp;·&nbsp; PI: Nacho Molina</div>
+          <div class="tl-desc">Developed deep learning methods for cell cycle inference from single-cell RNA-seq data. Applied AI and mathematical modelling to transcriptional dynamics and mitosis reactivation.</div>
+          <div class="tl-tags"><span class="tl-tag">Python</span><span class="tl-tag">TensorFlow</span><span class="tl-tag">scRNA-seq</span><span class="tl-tag">R</span></div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-date">2015 — 2017</div>
+        <div class="tl-body">
+          <div class="tl-role">Postdoctoral Researcher</div>
+          <div class="tl-org">Biozentrum, University of Basel · Switzerland &nbsp;·&nbsp; PI: Mihaela Zavolan</div>
+          <div class="tl-desc">Sequencing data analysis, machine learning, and biophysical modelling of mRNA translation. Built the TASEP simulator for ribosome dynamics published in PNAS 2019.</div>
+          <div class="tl-tags"><span class="tl-tag">R</span><span class="tl-tag">C++</span><span class="tl-tag">Python</span><span class="tl-tag">HPC / Slurm</span></div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-date">2012 — 2015</div>
+        <div class="tl-body">
+          <div class="tl-role">PhD in Complex Systems for Life Sciences</div>
+          <div class="tl-org">University of Torino · Italy &nbsp;·&nbsp; Supervisor: Prof. Michele Caselle</div>
+          <div class="tl-desc">Biophysical modelling of microRNA-dependent gene regulation. Stochastic processes and gene expression dynamics.</div>
+          <div class="tl-tags"><span class="tl-tag">C++</span><span class="tl-tag">R</span><span class="tl-tag">Mathematica</span></div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-date">2006 — 2011</div>
+        <div class="tl-body">
+          <div class="tl-role">BSc &amp; MSc in Theoretical Physics</div>
+          <div class="tl-org">University of Torino · Italy</div>
+          <div class="tl-desc">MSc grade: 110/110 cum laude. BSc grade: 110/110 cum laude.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Selected publications -->
+    <div class="section-label" style="padding-top:1rem;">Selected publications</div>
+    <div class="pub-list">
+
+      <div class="pub-card">
+        <div>
+          <div class="pub-title">Cell cycle gene regulation dynamics revealed by RNA velocity and deep-learning</div>
+          <div class="pub-meta">Riba et al. &nbsp;·&nbsp; Nature Communications 2022 &nbsp;·&nbsp; 1st & corresponding author</div>
+          <a class="pub-link" href="https://www.nature.com/articles/s41467-022-30545-8" target="_blank">nature.com ↗</a>
+        </div>
+        <span class="pub-badge">Nat Comms</span>
+      </div>
+
+      <div class="pub-card">
+        <div>
+          <div class="pub-title">Protein synthesis rates and ribosome occupancies reveal determinants of translation elongation rates</div>
+          <div class="pub-meta">Riba et al. &nbsp;·&nbsp; PNAS 2019 &nbsp;·&nbsp; 1st & corresponding author</div>
+          <a class="pub-link" href="https://www.pnas.org/doi/abs/10.1073/pnas.1817299116" target="_blank">pnas.org ↗</a>
+        </div>
+        <span class="pub-badge">PNAS</span>
+      </div>
+
+      <div class="pub-card">
+        <div>
+          <div class="pub-title">Explicit modeling of siRNA-dependent on- and off-target repression improves the interpretation of screening results</div>
+          <div class="pub-meta">Riba et al. &nbsp;·&nbsp; Cell Systems 2017 &nbsp;·&nbsp; 1st author</div>
+          <a class="pub-link" href="https://www.cell.com/cell-systems/fulltext/S2405-4712(17)30086-3" target="_blank">cell.com ↗</a>
+        </div>
+        <span class="pub-badge">Cell Sys</span>
+      </div>
+
+      <div class="pub-card">
+        <div>
+          <div class="pub-title">Terminal exon characterization with TECtool reveals an abundance of cell-specific isoforms</div>
+          <div class="pub-meta">Gruber, Gypas, Riba et al. &nbsp;·&nbsp; Nature Methods 2018</div>
+          <a class="pub-link" href="https://www.nature.com/articles/s41592-018-0114-z" target="_blank">nature.com ↗</a>
+        </div>
+        <span class="pub-badge">Nat Meth</span>
+      </div>
+
+    </div>
+    <p style="font-family:var(--mono);font-size:11px;font-weight:300;color:var(--muted);margin-top:0.8rem;letter-spacing:0.05em;">
+      Full list (12 papers, 1,020+ citations) →
+      <a href="https://scholar.google.com/citations?user=aZ9tkZgAAAAJ&hl=en" target="_blank" style="color:var(--teal);text-decoration:none;">Google Scholar</a>
+    </p>
+
+    <!-- Skills -->
+    <div class="section-label" style="padding-top:1rem;">Technical expertise</div>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <div class="skill-group-title">Languages</div>
+        <div class="skill-items"><span class="skill-item">Python</span><span class="skill-item">R</span><span class="skill-item">C++</span><span class="skill-item">SQL</span></div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">ML / AI</div>
+        <div class="skill-items"><span class="skill-item">TensorFlow</span><span class="skill-item">scikit-learn</span><span class="skill-item">Polars</span><span class="skill-item">NumPy</span></div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Cloud & infra</div>
+        <div class="skill-items"><span class="skill-item">GCP</span><span class="skill-item">Apache Kafka</span><span class="skill-item">Spark</span><span class="skill-item">Docker</span></div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Databases</div>
+        <div class="skill-items"><span class="skill-item">PostgreSQL</span><span class="skill-item">MongoDB</span><span class="skill-item">BigQuery</span></div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Bioinformatics</div>
+        <div class="skill-items"><span class="skill-item">RNA-seq</span><span class="skill-item">scRNA-seq</span><span class="skill-item">Ribo-seq</span><span class="skill-item">HPC / Slurm</span></div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Modelling</div>
+        <div class="skill-items"><span class="skill-item">Stochastic processes</span><span class="skill-item">ODE</span><span class="skill-item">TASEP</span><span class="skill-item">Bayesian</span></div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ── PROJECTS ── -->
+  <section id="projects">
+    <div class="section-label">Selected projects</div>
+    <div class="projects">
+
+      <article class="project pub">
+        <div class="proj-top">
+          <span class="proj-num">01</span>
+          <div class="proj-titles">
+            <h2 class="proj-title">DeepCycle</h2>
+            <p class="proj-venue">Nature Communications · 2022</p>
+          </div>
+          <span class="badge badge-gold">Published</span>
+        </div>
+        <p class="proj-desc">Cell cycle inference in single-cell RNA-seq using RNA velocity and a circular autoencoder. Assigns a continuous transcriptional phase angle to each cell, revealing hidden oscillatory structure without external perturbations or cell sorting.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">TensorFlow</span><span class="tag">scRNA-seq</span><span class="tag">RNA velocity</span><span class="tag">bioinformatics</span></div>
+        <div class="proj-links">
+          <a href="https://github.com/andreariba/DeepCycle" target="_blank">GitHub</a>
+          <a href="https://www.nature.com/articles/s41467-022-30545-8" target="_blank" class="cta">Paper ↗</a>
+          <span class="stars-count">★ 50</span>
+        </div>
+      </article>
+
+      <article class="project pub">
+        <div class="proj-top">
+          <span class="proj-num">02</span>
+          <div class="proj-titles">
+            <h2 class="proj-title">Codon TASEP</h2>
+            <p class="proj-venue">PNAS · 2019</p>
+          </div>
+          <span class="badge badge-gold">Published</span>
+        </div>
+        <p class="proj-desc">Simulation of ribosome dynamics along mRNA transcripts using an inhomogeneous TASEP with codon-specific elongation rates. Combined with ribosome footprinting data, the model revealed that amino acid composition is as important a determinant of translation elongation speed as codon–tRNA adaptation — challenging a long-standing assumption in molecular biology.</p>
+        <div class="tags"><span class="tag">C++</span><span class="tag">TASEP</span><span class="tag">ribosome profiling</span><span class="tag">translation</span><span class="tag">yeast</span><span class="tag">biophysics</span></div>
+        <div class="proj-links">
+          <a href="https://github.com/andreariba/codon_TASEP" target="_blank">GitHub</a>
+          <a href="https://www.pnas.org/doi/abs/10.1073/pnas.1817299116" target="_blank" class="cta">Paper ↗</a>
+        </div>
+      </article>
+
+      <article class="project live">
+        <div class="proj-top">
+          <span class="proj-num">03</span>
+          <div class="proj-titles">
+            <h2 class="proj-title">Games &amp; AI</h2>
+            <p class="proj-venue">Interactive demo</p>
+          </div>
+          <span class="badge badge-teal">Live demo</span>
+        </div>
+        <p class="proj-desc">A collection of AI algorithms for classic games — minimax with alpha-beta pruning, Monte Carlo Tree Search, and AlphaZero-style policy networks. Play against the AI directly in the browser for Tic-Tac-Toe, Connect Four, and Tetris.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">JavaScript</span><span class="tag">AlphaZero</span><span class="tag">MCTS</span><span class="tag">Deep Q-learning</span></div>
+        <div class="proj-links">
+          <a href="https://github.com/andreariba/games-ai" target="_blank">GitHub</a>
+          <a class="cta-teal" href="https://andreariba.github.io/games-ai" target="_blank">Play ↗</a>
+        </div>
+      </article>
+
+      <article class="project live">
+        <div class="proj-top">
+          <span class="proj-num">04</span>
+          <div class="proj-titles">
+            <h2 class="proj-title">Space 3D</h2>
+            <p class="proj-venue">Interactive demo</p>
+          </div>
+          <span class="badge badge-teal">Live demo</span>
+        </div>
+        <p class="proj-desc">Interactive 3D visualisation of the night sky using real HYG star catalogue data and physically accurate spectral colours. Navigate a rendition of the observable universe in your browser with Three.js.</p>
+        <div class="tags"><span class="tag">JavaScript</span><span class="tag">Three.js</span><span class="tag">WebGL</span><span class="tag">astronomy</span><span class="tag">data viz</span></div>
+        <div class="proj-links">
+          <a href="https://github.com/andreariba/space3D" target="_blank">GitHub</a>
+          <a class="cta-teal" href="https://andreariba.github.io/space3D/" target="_blank">Explore ↗</a>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="proj-top">
+          <span class="proj-num">05</span>
+          <div class="proj-titles">
+            <h2 class="proj-title">MoonBirths</h2>
+            <p class="proj-venue">Open data analysis · 2026</p>
+          </div>
+        </div>
+        <p class="proj-desc">Do births cluster around phases of the Moon? This project extracts every human birth date in Wikidata — 2.9 million day-precision records across two centuries — maps each to a lunar phase using astronomical ephemerides, and applies FFT analysis to search for any periodic signal. The result is a clean null finding: moon phase is not a measurable predictor of birth timing.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">Polars</span><span class="tag">Wikidata</span><span class="tag">pyephem</span><span class="tag">statistics</span><span class="tag">astronomy</span></div>
+        <div class="proj-links">
+          <a href="https://github.com/andreariba/moonbirths" target="_blank">GitHub</a>
+          <a class="cta" href="https://andreariba.github.io/moonbirths" target="_blank">Results ↗</a>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="proj-top">
+          <span class="proj-num">06</span>
+          <div class="proj-titles">
+            <h2 class="proj-title">Portfolio App</h2>
+            <p class="proj-venue">Web application</p>
+          </div>
+        </div>
+        <p class="proj-desc">A Plotly/Dash web application for presenting and exploring personal investment portfolios with forecasting capabilities — the foundation from which this portfolio site grew.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">Dash</span><span class="tag">Plotly</span><span class="tag">web app</span></div>
+        <div class="proj-links">
+          <a href="https://github.com/andreariba/Portfolio_app" target="_blank">GitHub</a>
+          <a href="https://medium.com/@arriba87/portfolio-visualization-and-forecasting-with-dash-in-python-f6c002bdae39" target="_blank">Article ↗</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
 
   <footer>
-    <span class="footer-name">Andrea Riba</span>
+    <span style="font-family:var(--serif);font-size:1rem;font-style:italic;color:var(--muted);">Andrea Riba</span>
     <nav class="footer-links">
       <a href="https://github.com/andreariba" target="_blank">GitHub</a>
+      <a href="https://www.linkedin.com/in/andrea-riba-054b715b/" target="_blank">LinkedIn</a>
+      <a href="https://scholar.google.com/citations?user=aZ9tkZgAAAAJ&hl=en" target="_blank">Scholar</a>
       <a href="mailto:arriba87@gmail.com">Email</a>
     </nav>
   </footer>
+
 </div>
 
 <script>
