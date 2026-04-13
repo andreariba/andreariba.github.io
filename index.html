@@ -144,15 +144,18 @@
   <!-- ── BIO ── -->
   <section id="bio">
     <div class="section-label">About</div>
-
     <p class="bio-intro">
-      I am a <strong>physicist</strong> passionate about building mathematical models to find patterns in data.
-      After a decade as a computational biologist — working on gene expression, translation dynamics,
-      and single-cell sequencing at leading European research institutes — I transitioned into industry,
-      applying the same rigour to credit risk modelling, cloud data engineering, and business process
-      optimisation. I am currently a <strong>Data Scientist at Leroy Merlin Italia</strong>, working on
-      supply chain, promotions, and logistics with Python, SQL, and Google Cloud Platform.
-      In my spare time I build open-source tools at the intersection of AI, data, and science.
+      I build <strong>data and machine learning systems</strong> that operate at scale.
+      
+      My work spans <strong>distributed data pipelines, real-time architectures, and applied ML</strong>, 
+      with production experience in cloud environments (GCP), event-driven systems (Kafka), 
+      and large-scale data processing (Spark, Polars).
+      
+      I started in academia as a computational biologist, publishing in top-tier journals 
+      (Nature Communications, PNAS), where I developed deep learning models and large-scale simulations. 
+      I now apply the same rigor to industry problems, focusing on <strong>performance, scalability, and impact</strong>.
+      
+      Currently Data Scientist at Leroy Merlin, working on supply chain optimisation, pricing, and logistics systems.
     </p>
 
     <!-- Stats -->
@@ -169,6 +172,18 @@
         <div class="stat-n">10 yr</div>
         <div class="stat-label">academic research career</div>
       </div>
+      <div class="stat-card">
+        <div class="stat-n">TB+</div>
+        <div class="stat-label">data processed</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-n">real-time</div>
+        <div class="stat-label">streaming pipelines</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-n">prod ML</div>
+        <div class="stat-label">models deployed</div>
+      </div>
     </div>
 
     <!-- Career timeline -->
@@ -180,7 +195,11 @@
         <div class="tl-body">
           <div class="tl-role">Data Scientist</div>
           <div class="tl-org">Leroy Merlin Italia · Milan, Italy</div>
-          <div class="tl-desc">Analysis, modelling, and optimisation of business processes including supply chain overstocks, free delivery products, and promo code strategies.</div>
+          <div class="tl-desc">
+            Designed and deployed data pipelines and ML models to optimise supply chain and pricing strategies, 
+            reducing overstocks and improving promotional efficiency. Worked with large-scale datasets in GCP 
+            (BigQuery) and orchestrated workflows using ZenML.
+          </div>
           <div class="tl-tags"><span class="tl-tag">Python</span><span class="tl-tag">SQL</span><span class="tl-tag">GCP</span><span class="tl-tag">ZenML</span><span class="tl-tag">n8n</span></div>
         </div>
       </div>
@@ -395,7 +414,12 @@
             <p class="proj-venue">Open data analysis · 2026</p>
           </div>
         </div>
-        <p class="proj-desc">Do births cluster around phases of the Moon? This project extracts every human birth date in Wikidata — 2.9 million day-precision records across two centuries — maps each to a lunar phase using astronomical ephemerides, and applies FFT analysis to search for any periodic signal. The result is a clean null finding: moon phase is not a measurable predictor of birth timing.</p>
+        <p class="proj-desc">
+          Do births cluster around phases of the Moon?
+          End-to-end data pipeline processing ~3M records from Wikidata, combining distributed data processing (Polars) 
+          with astronomical computations and FFT-based signal analysis. Designed for scalability and reproducibility, 
+          the system demonstrates how large-scale statistical pipelines can rigorously test hypotheses on noisy real-world data.
+        </p>
         <div class="tags"><span class="tag">Python</span><span class="tag">Polars</span><span class="tag">Wikidata</span><span class="tag">pyephem</span><span class="tag">statistics</span><span class="tag">astronomy</span></div>
         <div class="proj-links">
           <a href="https://github.com/andreariba/moonbirths" target="_blank">GitHub</a>
